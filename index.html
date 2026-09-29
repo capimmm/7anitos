@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7anitos</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background: #000;
+    font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ====== FUNDO LÍQUIDO (blobs em P&B) ====== */
+  .liquid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    filter: blur(80px);
+    background: #000;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: .55;
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+  .blob.b1 {
+    width: 60vmax; height: 60vmax;
+    background: radial-gradient(circle at 30% 30%, #ffffff 0%, #888 40%, transparent 70%);
+    top: -20vmax; left: -15vmax;
+    animation: drift1 22s ease-in-out infinite;
+  }
+  .blob.b2 {
+    width: 55vmax; height: 55vmax;
+    background: radial-gradient(circle at 60% 40%, #ffffff 0%, #555 40%, transparent 70%);
+    bottom: -25vmax; right: -15vmax;
+    animation: drift2 26s ease-in-out infinite;
+  }
+  .blob.b3 {
+    width: 45vmax; height: 45vmax;
+    background: radial-gradient(circle at 50% 50%, #cccccc 0%, #222 45%, transparent 75%);
+    top: 40%; left: 45%;
+    animation: drift3 30s ease-in-out infinite;
+    opacity: .4;
+  }
+  @keyframes drift1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33%     { transform: translate(15vmax, 10vmax) scale(1.15); }
+    66%     { transform: translate(-8vmax, 18vmax) scale(.95); }
+  }
+  @keyframes drift2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33%     { transform: translate(-18vmax, -8vmax) scale(1.1); }
+    66%     { transform: translate(10vmax, -15vmax) scale(.9); }
+  }
+  @keyframes drift3 {
+    0%,100% { transform: translate(-50%,-50%) scale(1); }
+    50%     { transform: translate(-50%,-50%) scale(1.3) rotate(45deg); }
+  }
+
+  /* vinheta para reforçar o preto */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.75) 100%);
+  }
+
+  /* ====== TELA INICIAL ====== */
+  #intro {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 20px;
+    transition: opacity .9s cubic-bezier(.4,0,.2,1),
+                transform .9s cubic-bezier(.4,0,.2,1),
+                filter .9s cubic-bezier(.4,0,.2,1);
+  }
+  #intro.hide {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(14px);
+    pointer-events: none;
+  }
+
+  /* ====== TÍTULO (brilho sutil) ====== */
+  .title-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 {
+    font-size: clamp(3.5rem, 17vw, 10rem);
+    font-weight: 900;
+    letter-spacing: -5px;
+    line-height: .9;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+    /* brilho bem discreto */
+    text-shadow:
+      0 0 1px rgba(255,255,255,.5),
+      0 0 12px rgba(255,255,255,.18);
+  }
+
+  /* varredura suave de brilho por cima do texto */
+  h1::after {
+    content: '7anitos';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    color: transparent;
+    background: linear-gradient(
+      100deg,
+      transparent 35%,
+      rgba(255,255,255,.7) 49%,
+      rgba(255,255,255,.85) 50%,
+      rgba(255,255,255,.7) 51%,
+      transparent 65%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes shine {
+    0%   { background-position: 200% 0; }
+    60%  { background-position: -100% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  /* reflexo de vidro bem leve atrás do título */
+  .title-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -30px -50px;
+    z-index: 1;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+      rgba(255,255,255,.07) 0%,
+      rgba(255,255,255,.02) 45%,
+      transparent 70%);
+    filter: blur(18px);
+    pointer-events: none;
+  }
+
+  .sub {
+    margin-top: 22px;
+    font-size: clamp(.7rem, 2.4vw, .85rem);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    font-weight: 500;
+    padding-left: 8px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease .6s forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: .5; transform: translateY(0); }
+  }
+
+  /* ====== BOTÃO LIQUID GLASS ====== */
+  #startBtn {
+    position: relative;
+    margin-top: 55px;
+    padding: 20px 78px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 70px;
+    overflow: hidden;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+      0 8px 32px rgba(0,0,0,.5),
+      inset 0 1px 0 rgba(255,255,255,.4),
+      inset 0 -1px 0 rgba(255,255,255,.1),
+      inset 0 0 30px rgba(255,255,255,.06);
+    transition: transform .5s cubic-bezier(.22,1,.36,1),
+                letter-spacing .5s cubic-bezier(.22,1,.36,1),
+                background .5s ease,
+                border-color .5s ease,
+                box-shadow .5s ease;
+    opacity: 0;
+    animation: fadeUp 1.2s ease .9s forwards;
+  }
+
+  #startBtn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,.28) 0%,
+      rgba(255,255,255,.06) 50%,
+      transparent 100%
+    );
+    border-radius: 70px 70px 0 0;
+    pointer-events: none;
+    transition: opacity .5s ease;
+  }
+
+  #startBtn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent 0%,
+      rgba(255,255,255,.55) 50%,
+      transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: none;
+    pointer-events: none;
+  }
+
+  #startBtn:hover {
+    background: rgba(255,255,255,.14);
+    border-color: rgba(255,255,255,.6);
+    letter-spacing: 8px;
+    transform: scale(1.06) translateY(-2px);
+    box-shadow:
+      0 14px 48px rgba(0,0,0,.6),
+      0 0 40px rgba(255,255,255,.15),
+      inset 0 1px 0 rgba(255,255,255,.6),
+      inset 0 0 40px rgba(255,255,255,.12);
+  }
+  #startBtn:hover::after {
+    animation: sweep 1s ease forwards;
+  }
+  @keyframes sweep {
+    from { left: -80%; }
+    to   { left: 130%; }
+  }
+
+  #startBtn:active {
+    transform: scale(.97);
+    transition: transform .12s ease;
+  }
+
+  /* ====== TELA DO VÍDEO ====== */
+  #player {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.05);
+    filter: blur(20px);
+    transition:
+      opacity 1s cubic-bezier(.4,0,.2,1),
+      transform 1s cubic-bezier(.4,0,.2,1),
+      filter 1s cubic-bezier(.4,0,.2,1),
+      visibility 1s;
+  }
+  #player.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  #vid {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* ====== BOTÃO VOLTAR (glass) ====== */
+  #backBtn {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 12;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 50px;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+      0 6px 22px rgba(0,0,0,.5),
+      inset 0 1px 0 rgba(255,255,255,.35);
+    transition: all .4s cubic-bezier(.22,1,.36,1);
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  #player.show #backBtn {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: .55s;
+  }
+  #backBtn:hover {
+    background: rgba(255,255,255,.2);
+    border-color: rgba(255,255,255,.7);
+    box-shadow:
+      0 8px 30px rgba(0,0,0,.6),
+      0 0 30px rgba(255,255,255,.15),
+      inset 0 1px 0 rgba(255,255,255,.6);
+    transform: scale(1.06);
+  }
+  #backBtn:active { transform: scale(.96); }
+  #backBtn .arrow {
+    display: inline-block;
+    transition: transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  #backBtn:hover .arrow { transform: translateX(-4px); }
+
+  /* ====== PARTÍCULAS P&B ====== */
+  .particle {
+    position: fixed;
+    bottom: -10px;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 0 12px rgba(255,255,255,.9), 0 0 24px rgba(255,255,255,.4);
+    animation: rise linear infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  @keyframes rise {
+    to {
+      transform: translateY(-110vh) translateX(var(--x));
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .15s !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="liquid-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+  <div class="vignette"></div>
+
+  <div id="intro">
+    <div class="title-wrap">
+      <h1>7anitos</h1>
+    </div>
+    <p class="sub">clique para começar</p>
+    <button id="startBtn">Start</button>
+  </div>
+
+  <div id="player">
+    <button id="backBtn"><span class="arrow">←</span> Voltar</button>
+    <video id="vid" controls playsinline preload="metadata">
+      <source src="video.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+  </div>
+
+<script>
+  const intro    = document.getElementById('intro');
+  const player   = document.getElementById('player');
+  const vid      = document.getElementById('vid');
+  const startBtn = document.getElementById('startBtn');
+  const backBtn  = document.getElementById('backBtn');
+
+  startBtn.addEventListener('click', () => {
+    intro.classList.add('hide');
+    player.classList.add('show');
+    setTimeout(() => {
+      vid.currentTime = 0;
+      const p = vid.play();
+      if (p && p.catch) p.catch(() => {});
+    }, 500);
+  });
+
+  backBtn.addEventListener('click', () => {
+    vid.pause();
+    player.classList.remove('show');
+    setTimeout(() => intro.classList.remove('hide'), 300);
+  });
+
+  const PARTICLES = window.innerWidth < 700 ? 18 : 36;
+  for (let i = 0; i < PARTICLES; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.setProperty('--x', (Math.random() * 160 - 80) + 'px');
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    const s = 1.5 + Math.random() * 2.5;
+    p.style.width  = s + 'px';
+    p.style.height = s + 'px';
+    p.style.opacity = 0.3 + Math.random() * 0.6;
+    document.body.appendChild(p);
+  }
+</script>
+</body>
+</html>
