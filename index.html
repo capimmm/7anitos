@@ -7,7 +7,6 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* Curva de movimento no estilo Apple */
   :root {
     --apple: cubic-bezier(0.32, 0.72, 0, 1);
     --apple-soft: cubic-bezier(0.4, 0, 0.2, 1);
@@ -29,21 +28,13 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ============ FUNDO LÍQUIDO ============ */
   .liquid-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    filter: blur(80px);
-    background: #000;
+    position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    filter: blur(80px); background: #000;
   }
   .blob {
-    position: absolute;
-    border-radius: 50%;
-    opacity: .5;
-    mix-blend-mode: screen;
-    will-change: transform;
+    position: absolute; border-radius: 50%;
+    opacity: .5; mix-blend-mode: screen; will-change: transform;
   }
   .blob.b1 {
     width: 60vmax; height: 60vmax;
@@ -61,18 +52,17 @@
     width: 45vmax; height: 45vmax;
     background: radial-gradient(circle at 50% 50%, #cccccc 0%, #222 45%, transparent 75%);
     top: 40%; left: 45%;
-    animation: drift3 30s ease-in-out infinite;
-    opacity: .35;
+    animation: drift3 30s ease-in-out infinite; opacity: .35;
   }
   @keyframes drift1 {
     0%,100% { transform: translate(0,0) scale(1); }
-    33%     { transform: translate(15vmax, 10vmax) scale(1.15); }
-    66%     { transform: translate(-8vmax, 18vmax) scale(.95); }
+    33%     { transform: translate(15vmax,10vmax) scale(1.15); }
+    66%     { transform: translate(-8vmax,18vmax) scale(.95); }
   }
   @keyframes drift2 {
     0%,100% { transform: translate(0,0) scale(1); }
-    33%     { transform: translate(-18vmax, -8vmax) scale(1.1); }
-    66%     { transform: translate(10vmax, -15vmax) scale(.9); }
+    33%     { transform: translate(-18vmax,-8vmax) scale(1.1); }
+    66%     { transform: translate(10vmax,-15vmax) scale(.9); }
   }
   @keyframes drift3 {
     0%,100% { transform: translate(-50%,-50%) scale(1); }
@@ -80,27 +70,18 @@
   }
 
   .vignette {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
     background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,.75) 100%);
   }
 
-  /* ============ TELA INICIAL ============ */
   #intro {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    padding: 20px;
+    position: relative; z-index: 3; text-align: center; padding: 20px;
     transition: opacity .9s var(--apple-soft),
                 transform .9s var(--apple-soft),
                 filter .9s var(--apple-soft);
   }
   #intro.hide {
-    opacity: 0;
-    transform: scale(1.08);
-    filter: blur(14px);
+    opacity: 0; transform: scale(1.08); filter: blur(14px);
     pointer-events: none;
   }
 
@@ -108,34 +89,24 @@
 
   h1 {
     font-size: clamp(3.5rem, 17vw, 10rem);
-    font-weight: 900;
-    letter-spacing: -5px;
-    line-height: .9;
-    color: #fff;
-    position: relative;
-    z-index: 2;
+    font-weight: 900; letter-spacing: -5px; line-height: .9;
+    color: #fff; position: relative; z-index: 2;
     text-shadow:
       0 0 1px rgba(255,255,255,.5),
       0 0 12px rgba(255,255,255,.18);
   }
 
   h1::after {
-    content: '7anitos';
-    position: absolute;
-    inset: 0;
-    z-index: 3;
+    content: '7anitos'; position: absolute; inset: 0; z-index: 3;
     color: transparent;
-    background: linear-gradient(
-      100deg,
+    background: linear-gradient(100deg,
       transparent 35%,
       rgba(255,255,255,.7) 49%,
       rgba(255,255,255,.85) 50%,
       rgba(255,255,255,.7) 51%,
-      transparent 65%
-    );
+      transparent 65%);
     background-size: 250% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
+    -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 5s ease-in-out infinite;
     pointer-events: none;
@@ -147,28 +118,21 @@
   }
 
   .title-wrap::before {
-    content: '';
-    position: absolute;
-    inset: -30px -50px;
-    z-index: 1;
+    content: ''; position: absolute; inset: -30px -50px; z-index: 1;
     border-radius: 50%;
     background: radial-gradient(ellipse at center,
       rgba(255,255,255,.07) 0%,
       rgba(255,255,255,.02) 45%,
       transparent 70%);
-    filter: blur(18px);
-    pointer-events: none;
+    filter: blur(18px); pointer-events: none;
   }
 
   .sub {
     margin-top: 22px;
     font-size: clamp(.7rem, 2.4vw, .85rem);
-    letter-spacing: 8px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.5);
-    font-weight: 500;
-    padding-left: 8px;
-    opacity: 0;
+    letter-spacing: 8px; text-transform: uppercase;
+    color: rgba(255,255,255,.5); font-weight: 500;
+    padding-left: 8px; opacity: 0;
     animation: fadeUp 1.2s var(--apple-soft) .6s forwards;
   }
   @keyframes fadeUp {
@@ -176,21 +140,15 @@
     to   { opacity: .5; transform: translateY(0); }
   }
 
-  /* ============ BOTÃO START ============ */
   #startBtn {
-    position: relative;
-    margin-top: 55px;
+    position: relative; margin-top: 55px;
     padding: 20px 78px;
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: #fff;
-    cursor: pointer;
+    font-size: 1.05rem; font-weight: 700;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: #fff; cursor: pointer;
     background: rgba(255,255,255,.06);
     border: 1px solid rgba(255,255,255,.28);
-    border-radius: 70px;
-    overflow: hidden;
+    border-radius: 70px; overflow: hidden;
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
     box-shadow:
@@ -206,35 +164,24 @@
     opacity: 0;
     animation: fadeUp 1.2s var(--apple-soft) .9s forwards;
   }
-
   #startBtn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
     height: 55%;
     background: linear-gradient(to bottom,
       rgba(255,255,255,.28) 0%,
       rgba(255,255,255,.06) 50%,
       transparent 100%);
-    border-radius: 70px 70px 0 0;
-    pointer-events: none;
+    border-radius: 70px 70px 0 0; pointer-events: none;
   }
-
   #startBtn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -80%;
-    width: 60%;
-    height: 100%;
+    content: ''; position: absolute; top: 0; left: -80%;
+    width: 60%; height: 100%;
     background: linear-gradient(100deg,
       transparent 0%,
       rgba(255,255,255,.55) 50%,
       transparent 100%);
-    transform: skewX(-20deg);
-    pointer-events: none;
+    transform: skewX(-20deg); pointer-events: none;
   }
-
   #startBtn:hover {
     background: rgba(255,255,255,.14);
     border-color: rgba(255,255,255,.6);
@@ -247,22 +194,13 @@
       inset 0 0 40px rgba(255,255,255,.12);
   }
   #startBtn:hover::after { animation: sweep 1s ease forwards; }
-  @keyframes sweep {
-    from { left: -80%; }
-    to   { left: 130%; }
-  }
+  @keyframes sweep { from { left: -80%; } to { left: 130%; } }
   #startBtn:active { transform: scale(.97); transition: transform .12s ease; }
 
-  /* ============ TELA DO VÍDEO ============ */
   #player {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    background: #000;
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(1.04);
-    filter: blur(16px);
+    position: fixed; inset: 0; z-index: 10; background: #000;
+    opacity: 0; visibility: hidden;
+    transform: scale(1.04); filter: blur(16px);
     transition:
       opacity 1s var(--apple-soft),
       transform 1s var(--apple-soft),
@@ -271,40 +209,73 @@
     overflow: hidden;
   }
   #player.show {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1);
-    filter: blur(0);
+    opacity: 1; visibility: visible;
+    transform: scale(1); filter: blur(0);
   }
 
   #vid {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #000;
-    display: block;
-    cursor: pointer;
+    width: 100%; height: 100%;
+    object-fit: contain; background: #000;
+    display: block; cursor: pointer;
   }
-
-  /* quando idle: esconde o cursor */
   #player.idle { cursor: none; }
 
-  /* ============ BOTÃO VOLTAR ============ */
+  /* Loading */
+  .loading {
+    position: absolute; top: 50%; left: 50%;
+    width: 44px; height: 44px;
+    margin: -22px 0 0 -22px;
+    border: 2px solid rgba(255,255,255,.15);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 11; opacity: 0; pointer-events: none;
+    transition: opacity .35s ease;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #player.loading .loading { opacity: 1; }
+
+  /* Erro */
+  .error-box {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    max-width: min(90%, 460px);
+    padding: 24px 28px;
+    background: rgba(20,20,20,.85);
+    border: 1px solid rgba(255,80,80,.35);
+    border-radius: 18px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    text-align: center;
+    z-index: 12;
+    display: none;
+  }
+  #player.error .error-box { display: block; }
+  .error-box h3 {
+    font-size: 1rem; margin-bottom: 10px;
+    color: #ff8080; letter-spacing: 1px;
+  }
+  .error-box p {
+    font-size: .85rem; line-height: 1.5;
+    color: rgba(255,255,255,.8);
+  }
+  .error-box code {
+    background: rgba(255,255,255,.1);
+    padding: 2px 6px; border-radius: 4px;
+    font-family: ui-monospace, monospace;
+    font-size: .8rem;
+  }
+
   #backBtn {
     position: absolute;
     top: max(20px, env(safe-area-inset-top));
     left: max(20px, env(safe-area-inset-left));
     z-index: 12;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
     padding: 11px 22px;
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: #fff;
-    cursor: pointer;
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: #fff; cursor: pointer;
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.22);
     border-radius: 50px;
@@ -313,8 +284,7 @@
     box-shadow:
       0 6px 22px rgba(0,0,0,.45),
       inset 0 1px 0 rgba(255,255,255,.35);
-    opacity: 0;
-    transform: translateY(-10px);
+    opacity: 0; transform: translateY(-10px);
     pointer-events: none;
     transition:
       opacity .5s var(--apple),
@@ -324,16 +294,12 @@
       box-shadow .35s ease;
   }
   #player.show #backBtn {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    transition-delay: .5s;
+    opacity: 1; transform: translateY(0);
+    pointer-events: auto; transition-delay: .5s;
   }
   #player.idle #backBtn {
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition-delay: 0s;
+    opacity: 0; transform: translateY(-10px);
+    pointer-events: none; transition-delay: 0s;
   }
   #backBtn:hover {
     background: rgba(255,255,255,.2);
@@ -345,18 +311,12 @@
     transform: translateY(0) scale(1.05);
   }
   #backBtn:active { transform: translateY(0) scale(.96); }
-  #backBtn .arrow {
-    display: inline-block;
-    transition: transform .4s var(--apple);
-  }
+  #backBtn .arrow { display: inline-block; transition: transform .4s var(--apple); }
   #backBtn:hover .arrow { transform: translateX(-3px); }
 
-  /* ============ BOTÃO CENTRAL (play/replay) ============ */
   .center-play {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 92px; height: 92px;
-    border-radius: 50%;
+    position: absolute; top: 50%; left: 50%;
+    width: 92px; height: 92px; border-radius: 50%;
     background: rgba(255,255,255,.12);
     border: 1px solid rgba(255,255,255,.28);
     backdrop-filter: blur(24px) saturate(180%);
@@ -365,14 +325,9 @@
       0 12px 40px rgba(0,0,0,.5),
       inset 0 1px 0 rgba(255,255,255,.4),
       inset 0 0 30px rgba(255,255,255,.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 11;
-    color: #fff;
-    opacity: 0;
-    transform: translate(-50%,-50%) scale(.85);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 11; color: #fff;
+    opacity: 0; transform: translate(-50%,-50%) scale(.85);
     pointer-events: none;
     transition:
       opacity .45s var(--apple),
@@ -383,14 +338,12 @@
   #player.paused .center-play {
     opacity: 1;
     transform: translate(-50%,-50%) scale(1);
-    pointer-events: auto;
-    transition-delay: .1s;
+    pointer-events: auto; transition-delay: .1s;
   }
   #player.idle .center-play {
     opacity: 0;
     transform: translate(-50%,-50%) scale(.85);
-    pointer-events: none;
-    transition-delay: 0s;
+    pointer-events: none; transition-delay: 0s;
   }
   .center-play:hover {
     background: rgba(255,255,255,.22);
@@ -406,46 +359,33 @@
   #player.ended .center-play .icon-play   { display: none; }
   #player.ended .center-play .icon-replay { display: block; }
 
-  /* ============ CONTROLES ============ */
   .controls {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
+    position: absolute; bottom: 0; left: 0; right: 0;
     z-index: 11;
-    padding: 90px max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+    padding: 90px max(20px, env(safe-area-inset-right))
+             max(20px, env(safe-area-inset-bottom))
+             max(20px, env(safe-area-inset-left));
     background: linear-gradient(to top,
       rgba(0,0,0,.85) 0%,
       rgba(0,0,0,.55) 45%,
       rgba(0,0,0,.15) 75%,
       transparent 100%);
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; transform: translateY(0);
     pointer-events: auto;
-    transition:
-      opacity .5s var(--apple),
-      transform .5s var(--apple);
+    transition: opacity .5s var(--apple), transform .5s var(--apple);
     will-change: opacity, transform;
   }
   #player.idle .controls {
-    opacity: 0;
-    transform: translateY(28px);
-    pointer-events: none;
+    opacity: 0; transform: translateY(28px); pointer-events: none;
   }
 
-  /* ---- Timeline ---- */
   .timeline {
-    position: relative;
-    height: 6px;
-    padding: 10px 0;
-    margin: 0 0 6px;
-    cursor: pointer;
-    touch-action: none;
-    display: flex;
-    align-items: center;
+    position: relative; height: 6px; padding: 10px 0;
+    margin: 0 0 6px; cursor: pointer;
+    touch-action: none; display: flex; align-items: center;
   }
   .timeline-track {
-    position: relative;
-    width: 100%;
-    height: 4px;
+    position: relative; width: 100%; height: 4px;
     background: rgba(255,255,255,.22);
     border-radius: 999px;
     transition: height .35s var(--apple);
@@ -455,10 +395,8 @@
 
   .timeline-buffer,
   .timeline-progress {
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    border-radius: 999px;
-    transition: width .15s linear;
+    position: absolute; top: 0; left: 0; bottom: 0;
+    border-radius: 999px; transition: width .15s linear;
   }
   .timeline-buffer   { background: rgba(255,255,255,.3); }
   .timeline-progress { background: #fff; }
@@ -466,11 +404,9 @@
   .timeline:hover .timeline-progress { transition: none; }
 
   .timeline-scrubber {
-    position: absolute;
-    top: 50%;
+    position: absolute; top: 50%;
     width: 14px; height: 14px;
-    background: #fff;
-    border-radius: 50%;
+    background: #fff; border-radius: 50%;
     transform: translate(-50%,-50%) scale(0);
     box-shadow:
       0 2px 8px rgba(0,0,0,.5),
@@ -484,137 +420,88 @@
   }
 
   .timeline-tooltip {
-    position: absolute;
-    bottom: calc(100% + 4px);
+    position: absolute; bottom: calc(100% + 4px);
     transform: translateX(-50%) scale(.9);
-    padding: 5px 9px;
-    font-size: .72rem;
+    padding: 5px 9px; font-size: .72rem;
     font-variant-numeric: tabular-nums;
-    color: #fff;
-    background: rgba(20,20,20,.85);
+    color: #fff; background: rgba(20,20,20,.85);
     border: 1px solid rgba(255,255,255,.15);
     border-radius: 8px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    opacity: 0;
-    pointer-events: none;
-    white-space: nowrap;
-    transition:
-      opacity .25s var(--apple),
-      transform .25s var(--apple);
+    opacity: 0; pointer-events: none; white-space: nowrap;
+    transition: opacity .25s var(--apple), transform .25s var(--apple);
   }
   .timeline:hover .timeline-tooltip,
   .timeline.dragging .timeline-tooltip {
-    opacity: 1;
-    transform: translateX(-50%) scale(1);
+    opacity: 1; transform: translateX(-50%) scale(1);
   }
 
-  /* ---- Linha de botões ---- */
   .controls-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 10px;
+    display: flex; align-items: center; gap: 6px; margin-top: 10px;
   }
-
   .ctrl-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    width: 42px; height: 42px;
+    background: transparent; border: none; color: #fff;
+    cursor: pointer; width: 42px; height: 42px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition:
-      background .3s ease,
-      transform .35s var(--apple);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .3s ease, transform .35s var(--apple);
   }
-  .ctrl-btn:hover {
-    background: rgba(255,255,255,.15);
-    transform: scale(1.08);
-  }
-  .ctrl-btn:active {
-    transform: scale(.92);
-    transition: transform .12s ease;
-  }
+  .ctrl-btn:hover { background: rgba(255,255,255,.15); transform: scale(1.08); }
+  .ctrl-btn:active { transform: scale(.92); transition: transform .12s ease; }
   .ctrl-btn svg { width: 22px; height: 22px; display: block; }
-  .ctrl-btn .icon-hide { display: none; }
 
-  /* toggles */
   #playBtn .icon-play  { display: none; }
   #playBtn .icon-pause { display: block; }
   #player.paused #playBtn .icon-play  { display: block; }
   #player.paused #playBtn .icon-pause { display: none; }
 
   #muteBtn .icon-muted { display: none; }
-  #player.muted #muteBtn .icon-muted { display: block; }
-  #player.muted #muteBtn .icon-volume{ display: none; }
+  #player.muted #muteBtn .icon-muted  { display: block; }
+  #player.muted #muteBtn .icon-volume { display: none; }
 
   #fsBtn .icon-exit { display: none; }
   #player.fullscreen #fsBtn .icon-exit { display: block; }
   #player.fullscreen #fsBtn .icon-full { display: none; }
 
   .time {
-    margin-left: 14px;
-    font-size: .82rem;
+    margin-left: 14px; font-size: .82rem;
     font-variant-numeric: tabular-nums;
     color: rgba(255,255,255,.85);
-    letter-spacing: .5px;
-    user-select: none;
+    letter-spacing: .5px; user-select: none;
   }
   .time .sep { color: rgba(255,255,255,.4); margin: 0 4px; }
-
   .spacer { flex: 1; }
 
-  /* Skip feedback */
   .skip-flash {
-    position: absolute;
-    top: 50%;
-    width: 78px; height: 78px;
-    border-radius: 50%;
+    position: absolute; top: 50%;
+    width: 78px; height: 78px; border-radius: 50%;
     background: rgba(255,255,255,.14);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255,255,255,.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: .75rem;
-    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: .75rem; font-weight: 700;
     letter-spacing: 1px;
-    opacity: 0;
-    transform: translateY(-50%) scale(.7);
+    opacity: 0; transform: translateY(-50%) scale(.7);
     pointer-events: none;
     transition: opacity .5s var(--apple), transform .5s var(--apple);
     z-index: 11;
   }
   .skip-flash.left  { left: 8%; }
   .skip-flash.right { right: 8%; }
-  .skip-flash.show {
-    opacity: 1;
-    transform: translateY(-50%) scale(1);
-  }
+  .skip-flash.show { opacity: 1; transform: translateY(-50%) scale(1); }
 
-  /* ============ PARTÍCULAS ============ */
   .particle {
-    position: fixed;
-    bottom: -10px;
-    width: 3px; height: 3px;
-    border-radius: 50%;
+    position: fixed; bottom: -10px;
+    width: 3px; height: 3px; border-radius: 50%;
     background: rgba(255,255,255,.9);
     box-shadow: 0 0 12px rgba(255,255,255,.9), 0 0 24px rgba(255,255,255,.4);
     animation: rise linear infinite;
-    pointer-events: none;
-    z-index: 2;
+    pointer-events: none; z-index: 2;
   }
   @keyframes rise {
-    to {
-      transform: translateY(-110vh) translateX(var(--x));
-      opacity: 0;
-    }
+    to { transform: translateY(-110vh) translateX(var(--x)); opacity: 0; }
   }
 
   @media (max-width: 640px) {
@@ -644,46 +531,42 @@
   </div>
   <div class="vignette"></div>
 
-  <!-- ============ TELA INICIAL ============ -->
   <div id="intro">
-    <div class="title-wrap">
-      <h1>7anitos</h1>
-    </div>
+    <div class="title-wrap"><h1>7anitos</h1></div>
     <p class="sub">clique para começar</p>
     <button id="startBtn">Start</button>
   </div>
 
-  <!-- ============ PLAYER ============ -->
   <div id="player" class="paused">
 
-    <!-- Botão voltar -->
     <button id="backBtn"><span class="arrow">←</span> Voltar</button>
 
-    <!-- Vídeo -->
-    <video id="vid" playsinline preload="metadata" crossorigin="anonymous">
-      <source src="video.mp4" type="video/mp4">
-      Seu navegador não suporta vídeo.
+    <!-- ⚠️ SEM crossorigin, COM preload=auto -->
+    <video id="vid" playsinline preload="auto" webkit-playsinline>
+      <source src="./video.mp4" type="video/mp4">
     </video>
 
-    <!-- Flash de skip -->
+    <div class="loading"></div>
+
+    <div class="error-box">
+      <h3>⚠ Não foi possível carregar o vídeo</h3>
+      <p id="errMsg">Verifique se <code>video.mp4</code> está na mesma pasta do <code>index.html</code> e se tem menos de 100 MB.</p>
+    </div>
+
     <div class="skip-flash left"  id="skipL">« 10s</div>
     <div class="skip-flash right" id="skipR">10s »</div>
 
-    <!-- Botão central play/replay -->
     <div class="center-play" id="centerPlay" aria-label="Reproduzir">
-      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
         <path d="M8 5.14v13.72c0 .78.84 1.26 1.5.85l11-6.86a1 1 0 0 0 0-1.7l-11-6.86A1 1 0 0 0 8 5.14z"/>
       </svg>
-      <svg class="icon-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="icon-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/>
         <path d="M21 3v5h-5"/>
       </svg>
     </div>
 
-    <!-- Controles -->
     <div class="controls" id="controls">
-
-      <!-- Timeline -->
       <div class="timeline" id="timeline">
         <div class="timeline-track">
           <div class="timeline-buffer"   id="buffer"></div>
@@ -693,14 +576,13 @@
         <div class="timeline-tooltip" id="tooltip">0:00</div>
       </div>
 
-      <!-- Botões -->
       <div class="controls-row">
         <button class="ctrl-btn" id="playBtn" aria-label="Play/Pause">
           <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
             <path d="M8 5.14v13.72c0 .78.84 1.26 1.5.85l11-6.86a1 1 0 0 0 0-1.7l-11-6.86A1 1 0 0 0 8 5.14z"/>
           </svg>
           <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="6"  y="5" width="4" height="14" rx="1"/>
+            <rect x="6" y="5" width="4" height="14" rx="1"/>
             <rect x="14" y="5" width="4" height="14" rx="1"/>
           </svg>
         </button>
@@ -764,14 +646,11 @@
   const durEl      = document.getElementById('dur');
   const skipL      = document.getElementById('skipL');
   const skipR      = document.getElementById('skipR');
+  const errMsg     = document.getElementById('errMsg');
 
-  let idleTimer   = null;
-  let hovering    = false;
-  let dragging    = false;
-  let rafId       = null;
-  const IDLE_MS   = 2800;
+  let idleTimer = null, hovering = false, dragging = false;
+  const IDLE_MS = 2800;
 
-  /* -------- Helpers -------- */
   const fmt = (s) => {
     if (!isFinite(s) || s < 0) return '0:00';
     const m = Math.floor(s / 60);
@@ -787,14 +666,42 @@
     }
   };
 
-  /* -------- Start / Voltar -------- */
+  /* -------- Diagnóstico de erro -------- */
+  vid.addEventListener('error', () => {
+    const err = vid.error;
+    let msg = 'Erro desconhecido ao carregar o vídeo.';
+    if (err) {
+      switch (err.code) {
+        case 1: msg = 'Carregamento abortado.'; break;
+        case 2: msg = 'Erro de rede ao baixar o arquivo. Confira o link / conexão.'; break;
+        case 3: msg = 'Erro ao decodificar. O vídeo pode estar corrompido ou em um codec não suportado (ex: HEVC/H.265).'; break;
+        case 4: msg = 'O navegador não suporta este formato. Tente converter o vídeo para MP4 (H.264 + AAC).'; break;
+      }
+    }
+    errMsg.textContent = msg + ' Arquivo esperado: ./video.mp4';
+    player.classList.add('error');
+    player.classList.remove('loading');
+  });
+
+  /* -------- Start -------- */
   startBtn.addEventListener('click', () => {
     intro.classList.add('hide');
     player.classList.add('show');
+
+    // força o carregamento (alguns navegadores só carregam depois de visível)
+    try { vid.load(); } catch(_) {}
+
     setTimeout(() => {
       vid.currentTime = 0;
       const p = vid.play();
-      if (p && p.catch) p.catch(() => {});
+      if (p && p.catch) {
+        p.catch((e) => {
+          // autoplay bloqueado ou erro — mostra tela de erro só se realmente falhar
+          if (vid.readyState === 0 && vid.error) {
+            player.classList.add('error');
+          }
+        });
+      }
     }, 500);
   });
 
@@ -806,7 +713,24 @@
     setTimeout(() => intro.classList.remove('hide'), 300);
   });
 
-  /* -------- Play / Pause -------- */
+  /* -------- Loading indicator -------- */
+  const updateLoading = () => {
+    // mostra spinner enquanto não tem frame pronto
+    if (player.classList.contains('error')) return;
+    if (vid.readyState < 3 && !vid.paused) {
+      player.classList.add('loading');
+    } else {
+      player.classList.remove('loading');
+    }
+  };
+  vid.addEventListener('waiting', updateLoading);
+  vid.addEventListener('canplay', updateLoading);
+  vid.addEventListener('playing', updateLoading);
+  vid.addEventListener('loadeddata', () => {
+    player.classList.remove('loading', 'error');
+  });
+
+  /* -------- Play/Pause -------- */
   const togglePlay = () => {
     if (vid.paused || vid.ended) {
       if (vid.ended) vid.currentTime = 0;
@@ -815,7 +739,6 @@
       vid.pause();
     }
   };
-
   playBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
   centerPlay.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
   vid.addEventListener('click', togglePlay);
@@ -835,15 +758,14 @@
     clearTimeout(idleTimer);
   });
 
-  /* -------- Idle / mousemove -------- */
+  /* -------- Idle -------- */
   player.addEventListener('mousemove', showControls);
   player.addEventListener('pointerdown', showControls);
   player.addEventListener('touchstart', showControls, { passive: true });
-
   controls.addEventListener('mouseenter', () => { hovering = true; showControls(); });
   controls.addEventListener('mouseleave', () => { hovering = false; showControls(); });
 
-  /* -------- Progresso / Tempo -------- */
+  /* -------- Progresso -------- */
   const updateProgress = () => {
     const d = vid.duration || 0;
     if (d > 0) {
@@ -856,31 +778,27 @@
       const end = vid.buffered.end(vid.buffered.length - 1);
       buffer.style.width = ((end / d) * 100) + '%';
     }
-    rafId = requestAnimationFrame(updateProgress);
+    requestAnimationFrame(updateProgress);
   };
-  updateProgress();
+  requestAnimationFrame(updateProgress);
 
   const updateDuration = () => { durEl.textContent = fmt(vid.duration); };
   vid.addEventListener('loadedmetadata', updateDuration);
   vid.addEventListener('durationchange', updateDuration);
 
-  /* -------- Seek (click + drag) -------- */
+  /* -------- Seek -------- */
   const setFromEvent = (e) => {
     const rect = timeline.getBoundingClientRect();
     const x = (e.clientX !== undefined ? e.clientX : e.touches[0].clientX) - rect.left;
     const pct = Math.max(0, Math.min(1, x / rect.width));
     if (vid.duration) vid.currentTime = pct * vid.duration;
-    return pct;
   };
-
   const updateTooltip = (e) => {
     const rect = timeline.getBoundingClientRect();
     const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
-    const pct = x / rect.width;
     tooltip.style.left = x + 'px';
-    tooltip.textContent = fmt(pct * (vid.duration || 0));
+    tooltip.textContent = fmt((x / rect.width) * (vid.duration || 0));
   };
-
   timeline.addEventListener('pointerdown', (e) => {
     e.stopPropagation();
     dragging = true;
@@ -890,12 +808,10 @@
     updateTooltip(e);
     showControls();
   });
-
   timeline.addEventListener('pointermove', (e) => {
     updateTooltip(e);
     if (dragging) setFromEvent(e);
   });
-
   timeline.addEventListener('pointerup', (e) => {
     if (!dragging) return;
     dragging = false;
@@ -904,33 +820,26 @@
     showControls();
   });
 
-  timeline.addEventListener('pointercancel', () => {
-    dragging = false;
-    timeline.classList.remove('dragging');
-  });
-
-  /* -------- Mute -------- */
+  /* -------- Mute / Fullscreen -------- */
   muteBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     vid.muted = !vid.muted;
     player.classList.toggle('muted', vid.muted);
   });
-
-  /* -------- Fullscreen -------- */
   const toggleFS = () => {
     if (!document.fullscreenElement) {
-      (player.requestFullscreen || player.webkitRequestFullscreen || player.msRequestFullscreen).call(player);
+      (player.requestFullscreen || player.webkitRequestFullscreen).call(player);
     } else {
-      (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
     }
   };
   fsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFS(); });
   document.addEventListener('fullscreenchange', () => {
-    const isFS = !!document.fullscreenElement;
-    player.classList.toggle('fullscreen', isFS);
+    player.classList.toggle('fullscreen', !!document.fullscreenElement);
   });
+  vid.addEventListener('dblclick', toggleFS);
 
-  /* -------- Skip ±10s -------- */
+  /* -------- Skip -------- */
   const flash = (el) => {
     el.classList.add('show');
     setTimeout(() => el.classList.remove('show'), 550);
@@ -940,33 +849,23 @@
     vid.currentTime = Math.max(0, Math.min(vid.duration, vid.currentTime + delta));
   };
 
-  /* -------- Teclado -------- */
   document.addEventListener('keydown', (e) => {
     if (!player.classList.contains('show')) return;
     switch (e.key) {
-      case ' ':
-      case 'k':
-        e.preventDefault(); togglePlay(); showControls(); break;
-      case 'ArrowLeft':
-        seekBy(-5); flash(skipL); showControls(); break;
-      case 'ArrowRight':
-        seekBy(5); flash(skipR); showControls(); break;
-      case 'm':
-        muteBtn.click(); showControls(); break;
-      case 'f':
-        toggleFS(); showControls(); break;
+      case ' ': case 'k': e.preventDefault(); togglePlay(); showControls(); break;
+      case 'ArrowLeft':   seekBy(-5); flash(skipL); showControls(); break;
+      case 'ArrowRight':  seekBy(5);  flash(skipR); showControls(); break;
+      case 'm': muteBtn.click(); showControls(); break;
+      case 'f': toggleFS(); showControls(); break;
       case 'Escape':
         if (!document.fullscreenElement && player.classList.contains('show')) backBtn.click();
         break;
     }
   });
 
-  /* -------- Duplo clique = fullscreen -------- */
-  vid.addEventListener('dblclick', toggleFS);
-
-  /* -------- Partículas (só na tela inicial) -------- */
-  const PARTICLES = window.innerWidth < 700 ? 16 : 32;
-  for (let i = 0; i < PARTICLES; i++) {
+  /* -------- Partículas -------- */
+  const N = window.innerWidth < 700 ? 16 : 32;
+  for (let i = 0; i < N; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.style.left = Math.random() * 100 + 'vw';
@@ -974,8 +873,7 @@
     p.style.animationDuration = (8 + Math.random() * 10) + 's';
     p.style.animationDelay = (Math.random() * 12) + 's';
     const s = 1.5 + Math.random() * 2.5;
-    p.style.width  = s + 'px';
-    p.style.height = s + 'px';
+    p.style.width = s + 'px'; p.style.height = s + 'px';
     p.style.opacity = 0.3 + Math.random() * 0.6;
     document.body.appendChild(p);
   }
